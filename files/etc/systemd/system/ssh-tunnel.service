@@ -1,0 +1,22 @@
+[Unit]
+Description=SSH tunnel to remote Control Centre
+After=network-online.target
+
+[Service]
+User=nobody
+Environment=RR_SSH_GATETIME=10
+EnvironmentFile=-/etc/environment.inherited
+EnvironmentFile=/etc/default/ssh-tunnel
+ExecStart=/usr/local/bin/rr-ssh -M 0 -N -q -v \
+	-o "ServerAliveInterval 3" \
+	-o "ServerAliveCountMax 5" \
+	$RR_SSH_OPTIONS \
+	$RR_SSH_REMOTE_HOST
+#ExecStop=killall -s KILL autossh
+Restart=always
+RestartSec=7
+StartLimitBurst=5
+StartLimitIntervalSec=30
+
+[Install]
+WantedBy=multi-user.target

@@ -1,2 +1,2 @@
-# docker-satellite-base
-Docker satellite system using ssh for tunneling
+# Satellite base
+Docker satellite system using rr-ssh for tunneling

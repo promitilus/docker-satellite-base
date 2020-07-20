@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  remote-satellite:
+    container_name: remote-satellite
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    restart: always
+    environment:
+      SATELLITE_REMOTE_HOST:
+    tty: true
+    #privileged: true
+    security_opt:
+      - seccomp=unconfined
+    tmpfs:
+      - /run
+      - /run/lock
+      - /tmp
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      - "${SATELLITE_CONFIG_DIR:-config_volume}:/etc/persistent"
+      - "${SATELLITE_DATA_DIR:-data_volume}:/mnt/data"
+
+volumes:
+  config_volume:
+  data_volume:

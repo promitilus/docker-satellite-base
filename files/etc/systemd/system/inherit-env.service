@@ -1,0 +1,9 @@
+[Unit]
+Description=Environment inheritation service
+
+[Service]
+Type=oneshot
+ExecStart=/etc/scripts/inherit-environment.sh
+
+[Install]
+WantedBy=multi-user.target

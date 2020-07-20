@@ -1,0 +1,6 @@
+RR_SSH_GATETIME=10
+RR_SSH_OPTIONS=-F /etc/satellite/ssh_config \
+	-o RemoteCommand="satellite-on-connect %l %h" \
+	-o ExitOnForwardFailure=yes \
+	-o Compression=yes
+RR_SSH_REMOTE_HOST=""
