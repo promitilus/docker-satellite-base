@@ -10,7 +10,8 @@ ENV DATA_DIR /mnt/data
 RUN apt-get update \
 	&& apt-get install -y \
 		systemd systemd-sysv \
-		dnsmasq \
+		curl netcat \
+		dnsmasq dnsutils \
 	&& apt-get install -y --no-install-recommends \
 		openssh-client openssh-server openssh-sftp-server \
 		git rsync \
@@ -36,8 +37,10 @@ RUN systemctl set-default multi-user.target
 RUN systemctl mask dev-hugepages.mount sys-fs-fuse-connections.mount
 
 COPY files/etc /etc
+COPY files/policy-rc.d /usr/sbin/policy-rc.d
 
-ADD https://raw.githubusercontent.com/promitilus/rr-ssh/production/rr-ssh /usr/local/bin
+ADD https://raw.githubusercontent.com/promitilus/rr-ssh/production/rr-ssh /usr/local/bin/rr-ssh
+RUN chmod a+rx /usr/local/bin/rr-ssh
 
 RUN touch /etc/.NOT_CONFIGURED
 

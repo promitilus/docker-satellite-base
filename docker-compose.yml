@@ -8,6 +8,7 @@ services:
       dockerfile: ./Dockerfile
     restart: always
     environment:
+      SATELLITE_REMOTE_USER:
       SATELLITE_REMOTE_HOST:
     tty: true
     #privileged: true
