@@ -6,21 +6,19 @@ After=network-online.target
 User=nobody
 Environment=RR_SSH_GATETIME=10
 EnvironmentFile=-/etc/environment.inherited
+EnvironmentFile=/etc/environment.tunnel
 EnvironmentFile=/etc/default/ssh-tunnel
-ExecStart=/usr/local/bin/rr-ssh -M 0 -N -q -v \
-	-o "ServerAliveInterval 3" \
-	-o "ServerAliveCountMax 5" \
+ExecStart=/usr/local/bin/rr-ssh -q \
+	-o "ServerAliveInterval=3" \
+	-o "ServerAliveCountMax=5" \
 	$SSH_TUNNEL_OPTIONS \
 	$SATELLITE_SSH_EXTRA_OPTIONS \
-	"$SATELLITE_REMOTE_USER@$SATELLITE_REMOTE_HOST"
+	"${SATELLITE_REMOTE_USER}@${SATELLITE_REMOTE_HOST}"
 #ExecStop=killall -s KILL autossh
 Restart=always
 RestartSec=7
 StartLimitBurst=5
 StartLimitIntervalSec=30
-
-StandardOutput=file:/tmp/log1
-StandardError=file:/tmp/log2
 
 [Install]
 WantedBy=multi-user.target

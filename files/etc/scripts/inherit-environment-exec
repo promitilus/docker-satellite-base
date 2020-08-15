@@ -1,0 +1,5 @@
+#!/bin/bash
+
+set -a;
+source /etc/environment.inherited || exit 1;
+exec "$@";

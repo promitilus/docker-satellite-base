@@ -8,6 +8,8 @@ services:
       dockerfile: ./Dockerfile
     restart: always
     environment:
+      HOSTNAME: "${SATELLITE_HOSTNAME}"
+      SATELLITE_HOSTNAME:
       SATELLITE_REMOTE_USER:
       SATELLITE_REMOTE_HOST:
     tty: true
