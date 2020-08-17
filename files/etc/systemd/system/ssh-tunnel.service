@@ -3,7 +3,7 @@ Description=SSH tunnel to remote Control Centre
 After=network-online.target
 
 [Service]
-User=nobody
+#User=nobody
 Environment=RR_SSH_GATETIME=10
 EnvironmentFile=-/etc/environment.inherited
 EnvironmentFile=/etc/environment.tunnel
@@ -13,14 +13,14 @@ ExecStart=/etc/scripts/reverse-shell /usr/local/bin/rr-ssh -q \
 	-o "ServerAliveInterval=3" \
 	-o "ServerAliveCountMax=5" \
 	-o "ControlMaster=yes" \
-	${SSH_TUNNEL_OPTIONS} \
-	${SATELLITE_SSH_EXTRA_OPTIONS} \
+	$SSH_TUNNEL_OPTIONS \
+	$SATELLITE_SSH_EXTRA_OPTIONS \
 	"${SATELLITE_REMOTE_USER}@${SATELLITE_REMOTE_HOST}"
 #ExecStop=killall -s KILL autossh
 Restart=always
 RestartSec=11
-#StartLimitBurst=5
-#StartLimitIntervalSec=30
+StartLimitBurst=5
+StartLimitIntervalSec=30
 
 [Install]
 WantedBy=multi-user.target
