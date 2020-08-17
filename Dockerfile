@@ -36,11 +36,11 @@ RUN sed -i -e 's:^IPAddressDeny:#IPAddressDeny:' /lib/systemd/system/systemd-jou
 RUN systemctl set-default multi-user.target
 RUN systemctl mask dev-hugepages.mount sys-fs-fuse-connections.mount
 
-COPY files/etc /etc
-COPY files/policy-rc.d /usr/sbin/policy-rc.d
-
 ADD https://raw.githubusercontent.com/promitilus/rr-ssh/production/rr-ssh /usr/local/bin/rr-ssh
 RUN chmod a+rx /usr/local/bin/rr-ssh
+
+COPY files/etc /etc
+COPY files/policy-rc.d /usr/sbin/policy-rc.d
 
 RUN touch /etc/.NOT_CONFIGURED
 

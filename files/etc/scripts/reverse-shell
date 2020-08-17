@@ -1,0 +1,42 @@
+#!/usr/bin/perl
+
+use strict;
+use IPC::Open2;
+
+exit(&main(@ARGV));
+
+sub main(@) {
+	my (@argv) = @_;
+
+	my ($chld_in, $chld_out);
+	my $remote_pid = open2($chld_out, $chld_in, @argv);
+	select($chld_out);
+	$! = 1;
+	select(STDOUT);
+
+	my $pid = fork();
+	if ($pid == 0) {
+		close(STDIN);
+		close(STDOUT);
+		close(STDERR);
+		open(STDIN, "<&", $chld_out) || die("$!");
+		open(STDOUT, ">&", $chld_in) || die("$!");
+		open(STDERR, ">&", $chld_in) || die("$!");
+		if (!exec($ENV['SHELL'] || "/bin/bash")) {
+			print(STDERR "$0: failed to execute login shell - $!\n");
+			return -1;
+		}
+	}
+
+	close($chld_in);
+	close($chld_out);
+
+#	close(STDIN);
+#	close(STDOUT);
+#	close(STDERR);
+
+	wait();
+	kill($pid);
+	kill($remote_pid);
+	return 9;
+}

