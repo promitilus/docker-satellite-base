@@ -1,5 +1,4 @@
 RR_SSH_GATETIME=10
-#	-o RemoteCommand="satellite-on-connect %l %h"
-SSH_TUNNEL_OPTIONS=-F /etc/satellite/ssh_config \
-	-o ExitOnForwardFailure=yes
+SSH_TUNNEL_OPTIONS=-F /etc/satellite/ssh_config
+#	-o RemoteCommand="on-connect %l %h"
 SSH_COMMAND="reverse-shell"

@@ -19,7 +19,7 @@
 Host *
 	IdentityFile /etc/persistent/ssh/id_ecdsa
 	GlobalKnownHostsFile /etc/persistent/ssh/known_hosts
-	UserKnownHostsFile /etc/persistent/ssh/user_known_hosts
+	UserKnownHostsFile /mnt/data/ssh/known_hosts
 
 	ForwardAgent no
 	ForwardX11 no
@@ -56,7 +56,8 @@ Host *
 	Compression no	
 	ExitOnForwardFailure no
 
-	ControlPath /mnt/data/ssh/tunnel.socket
+	ControlPersist 0
+	ControlPath /tmp/tunnel.socket
 
 # Place for other hosts
 Include /etc/persistent/ssh/hosts/*.host

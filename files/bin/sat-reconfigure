@@ -1,0 +1,26 @@
+#!/bin/bash
+# Fetch new config for ssh tunnel
+#
+
+cmd="$1";
+
+set -u;
+
+if ! [ -d "$PERSISTENT_DIR/ssh/hosts" ];
+then
+	rm -rf "$PERSISTENT_DIR/ssh/hosts";
+	git clone "$SATELLITE_REMOTE_USER@$SATELLITE_REMOTE_HOST:." "$PERSISTENT_DIR/ssh/hosts";
+fi;
+
+cd "$PERSISTENT_DIR/ssh/hosts" || exit;
+
+refid_before=`git log -1 --format=%h 2>/dev/null`;
+git fetch;
+git fetch --tags;
+git checkout production;
+refid_after=`git log -1 --format=%h 2>/dev/null`;
+
+if [ "$cmd" = "reload" ] && [ "$refid_before" != "$refid_after" ];
+then
+	systemctl restart ssh-tunnel;
+fi;

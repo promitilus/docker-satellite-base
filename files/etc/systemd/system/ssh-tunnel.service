@@ -18,7 +18,7 @@ ExecStart=/etc/scripts/reverse-shell /usr/local/bin/rr-ssh -q \
 	"${SATELLITE_REMOTE_USER}@${SATELLITE_REMOTE_HOST}"
 #ExecStop=killall -s KILL autossh
 Restart=always
-RestartSec=11
+RestartSec=7
 StartLimitBurst=5
 StartLimitIntervalSec=30
 

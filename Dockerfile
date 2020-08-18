@@ -40,6 +40,7 @@ ADD https://raw.githubusercontent.com/promitilus/rr-ssh/production/rr-ssh /usr/l
 RUN chmod a+rx /usr/local/bin/rr-ssh
 
 COPY files/etc /etc
+COPY files/bin /usr/local/bin
 COPY files/policy-rc.d /usr/sbin/policy-rc.d
 
 RUN touch /etc/.NOT_CONFIGURED

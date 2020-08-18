@@ -10,3 +10,4 @@ else
 fi;
 
 ln -sf "$DATA_DIR/log" /var/log;
+
