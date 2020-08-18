@@ -1,0 +1,12 @@
+[Unit]
+Description=Regular ssh-reconfigure timer
+#Requires=ssh-tunnel-reconfigure.service
+
+[Timer]
+Unit=ssh-tunnel-reconfigure.service
+OnBootSec=3m
+OnActiveSec=15m
+RandomizedDelaySec=3m
+
+[Install]
+WantedBy=timers.target

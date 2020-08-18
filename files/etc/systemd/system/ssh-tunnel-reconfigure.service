@@ -1,0 +1,14 @@
+[Unit]
+Description=SSH tunnel reconfiguration service
+After=network-online.target
+After=ssh-tunnel.service
+BindsTo=ssh-tunnel.service
+
+[Service]
+Type=oneshot
+EnvironmentFile=/etc/environment.inherited
+ExecStartPre=/bin/sleep 13
+ExecStart=/usr/local/bin/sat-reconfigure reload
+
+[Install]
+WantedBy=multi-user.target
