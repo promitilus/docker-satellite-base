@@ -4,9 +4,10 @@ Description=Regular ssh-reconfigure timer
 
 [Timer]
 Unit=ssh-tunnel-reconfigure.service
-OnBootSec=3m
-OnActiveSec=15m
-RandomizedDelaySec=3m
+OnBootSec=2m
+OnCalendar=*-*-* 00:00:00 UTC
+OnUnitInactiveSec=33m
+RandomizedDelaySec=1m
 
 [Install]
 WantedBy=timers.target

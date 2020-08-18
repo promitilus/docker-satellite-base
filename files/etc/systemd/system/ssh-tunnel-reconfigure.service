@@ -2,13 +2,16 @@
 Description=SSH tunnel reconfiguration service
 After=network-online.target
 After=ssh-tunnel.service
-BindsTo=ssh-tunnel.service
+#Requisite=ssh-tunnel.service
+#ConditionPathExists=/tmp/tunnel.socket
 
 [Service]
-Type=oneshot
+Type=simple
 EnvironmentFile=/etc/environment.inherited
-ExecStartPre=/bin/sleep 13
-ExecStart=/usr/local/bin/sat-reconfigure reload
+#ExecStartPre=/usr/bin/test -e /tmp/tunnel.socket
+ExecStart=/bin/bash -c 'for i in `seq 1 15`; do [ -e /tmp/tunnel.socket ] && exec /usr/local/bin/sat-reconfigure reload || (echo "ssh-tunnel not connected, retrying (#$i)..."; sleep 17); done;'
+#RestartSec=33
+#Restart=on-failure
 
 [Install]
 WantedBy=multi-user.target

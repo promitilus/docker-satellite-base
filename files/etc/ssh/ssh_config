@@ -54,3 +54,4 @@ Host {{ SATELLITE_REMOTE_HOST }}
 	User {{ SATELLITE_REMOTE_USER }}
 	ControlMaster no
 	ControlPath /tmp/tunnel.socket
+	ConnectTimeout 33
