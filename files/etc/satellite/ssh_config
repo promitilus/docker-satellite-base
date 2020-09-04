@@ -17,7 +17,7 @@
 # ssh_config(5) man page.
 
 Host *
-	IdentityFile /etc/persistent/ssh/id_ecdsa
+	IdentityFile /etc/persistent/ssh/id_ed25519
 	GlobalKnownHostsFile /etc/persistent/ssh/known_hosts
 	UserKnownHostsFile /mnt/data/ssh/known_hosts
 

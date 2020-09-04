@@ -1,8 +1,8 @@
 version: '3'
 
 services:
-  remote-satellite:
-    container_name: remote-satellite
+  satellite-remote:
+    container_name: satellite-remote
     build:
       context: .
       dockerfile: ./Dockerfile
