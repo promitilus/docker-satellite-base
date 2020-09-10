@@ -1,0 +1,6 @@
+#!/bin/bash
+# collect authorized keys
+
+source /etc/environment.inherited;
+
+find "$PERSISTENT_DIR/ssh/hosts" -name "*.authorized_keys" | xargs -r cat

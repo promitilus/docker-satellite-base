@@ -14,12 +14,19 @@ fi;
 
 cd "$PERSISTENT_DIR/ssh/hosts" || exit;
 
+# fetch new data
 refid_before=`git log -1 --format=%h 2>/dev/null`;
 git fetch;
 git fetch --tags;
+git reset --hard;
+git pull origin production --allow-unrelated-histories;
 git checkout production;
 refid_after=`git log -1 --format=%h 2>/dev/null`;
 
+# verify connection using dummy connect and remove invalid configs
+ssh -F /etc/satellite/ssh_config localhost -p 1 -o ConnectTimeout=1 -o 'ProxyCommand=cat /dev/null' -o 'ControlPath=/dev/null' | grep -i "bad configuration" | awk -F : '{print $1}' | sort -u | grep "/etc/persistent/ssh/hosts/" | xargs rm -vf
+
+# reload as needed
 if [ "$cmd" = "reload" ] && [ "$refid_before" != "$refid_after" ];
 then
 	systemctl restart ssh-tunnel;
